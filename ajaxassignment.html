@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Homework 8 - AJAX Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f9;
+      color: #333;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 80%;
+      background-color: #fff;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    h2 {
+      color: #007bff;
+    }
+/* Button (Link) Styling */
+a {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #34495e;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.2em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+a:hover {
+    background-color: #1abc9c;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+  </style>
+</head>
+<body>
+  <h1>Homework 8 - AJAX Application</h1>
+  <button type="button" onclick="loadDoc()">Get CD Collection</button>
+  <table id="demo"></table>
+
+  <script>
+    function loadDoc() {
+      const xhttp = new XMLHttpRequest();
+      xhttp.onload = function() {
+        myFunction(this);
+      }
+      xhttp.open("GET", "cd_catalog.xml", true);
+      xhttp.send();
+    }
+    function myFunction(xml) {
+      const xmlDoc = xml.responseXML;
+      const x = xmlDoc.getElementsByTagName("CD");
+      let table = "<tr><th>Artist</th><th>Title</th></tr>";
+      for (let i = 0; i < x.length; i++) {
+        table += "<tr><td>" +
+          x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue +
+          "</td><td>" +
+          x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
+          "</td></tr>";
+      }
+      document.getElementById("demo").innerHTML = table;
+    }
+  </script>
+
+  <h2>AJAX Explanation</h2>
+  <p>In this application, JavaScript leverages AJAX to fetch data from an external XML file (`cd_catalog.xml`). 
+     The `XMLHttpRequest` object is used to initiate an asynchronous request to the server. 
+     When the server responds with the XML file, the `onload` function processes the data using the `responseXML` property, 
+     which parses the XML content into a DOM tree structure.</p>
+  <p>The parsed data is then dynamically rendered into an HTML table by iterating through the XML nodes with JavaScript. 
+     This approach enhances user experience by updating only specific parts of the web page without reloading the entire page.</p>
+
+  <h2>REST API Report</h2>
+  <p>Our team, working at "Innovative Web Solutions Inc.," recommends using the OpenWeather API for web applications that require weather data. 
+     This API provides real-time weather updates, historical data, and forecasts, making it suitable for a wide range of applications.</p>
+  <p>The OpenWeather API returns responses in JSON format, which is lightweight and easy to parse using JavaScript. 
+     A free API key is required to access the service, which allows limited daily requests. For higher request limits and additional features, 
+     paid plans are available on a subscription basis.</p>
+  <p>Developers can refer to the <a href="https://openweathermap.org/api" target="_blank">OpenWeather API Documentation</a> for detailed usage instructions, 
+     including endpoints, parameters, and example requests.</p>
+  <p>Additionally, we suggest exploring the comprehensive <a href="https://apilist.fun/" target="_blank">API List Directory</a> and 
+     <a href="https://www.freepublicapis.com/" target="_blank">Free Public APIs Directory</a> for other potential APIs that can enhance the functionality of web applications.</p>
+  <a href="weather_example.html">View Weather Example</a>
+  <a href="Homework1.html">Go to Homework 1</a>
+</body>
+</html>
